@@ -164,6 +164,7 @@ export default class VideoPlayer extends Component {
 
     if (this.props.endWithThumbnail) {
       this.setState({ isStarted: false });
+      this.player.dismissFullscreenPlayer();
     }
 
     this.player.seek(0);

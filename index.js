@@ -310,18 +310,31 @@ export default class VideoPlayer extends Component {
   renderThumbnail() {
     const { thumbnail, style, customStyles, ...props } = this.props;
     return (
-      <Image
-        {...props}
-        style={[
-          styles.thumbnail,
-          this.getSizeStyles(),
-          style,
-          customStyles.thumbnail,
-        ]}
-        source={thumbnail}
-      >
-        {this.renderStartButton()}
-      </Image>
+      [
+        <Image
+          {...props}
+          style={[
+            styles.thumbnail,
+            this.getSizeStyles(),
+            style,
+            customStyles.thumbnail,
+          ]}
+          source={thumbnail}
+        />,
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          {this.renderStartButton()}
+        </View>
+      ]
     );
   }
 

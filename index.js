@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View, StyleSheet, Image, TouchableOpacity, Platform, NativeModules } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Video from 'react-native-video';
@@ -309,18 +310,31 @@ export default class VideoPlayer extends Component {
   renderThumbnail() {
     const { thumbnail, style, customStyles, ...props } = this.props;
     return (
-      <Image
-        {...props}
-        style={[
-          styles.thumbnail,
-          this.getSizeStyles(),
-          style,
-          customStyles.thumbnail,
-        ]}
-        source={thumbnail}
-      >
-        {this.renderStartButton()}
-      </Image>
+      [
+        <Image
+          {...props}
+          style={[
+            styles.thumbnail,
+            this.getSizeStyles(),
+            style,
+            customStyles.thumbnail,
+          ]}
+          source={thumbnail}
+        />,
+        <View
+          style={{
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}
+        >
+          {this.renderStartButton()}
+        </View>
+      ]
     );
   }
 
@@ -470,45 +484,45 @@ export default class VideoPlayer extends Component {
   }
 }
 
-VideoPlayer.propTypes = {
-  video: Video.propTypes.source,
-  thumbnail: Image.propTypes.source,
-  videoWidth: PropTypes.number,
-  videoHeight: PropTypes.number,
-  duration: PropTypes.number,
-  autoplay: PropTypes.bool,
-  defaultMuted: PropTypes.bool,
-  muted: PropTypes.bool,
-  style: View.propTypes.style,
-  controlsTimeout: PropTypes.number,
-  disableControlsAutoHide: PropTypes.bool,
-  loop: PropTypes.bool,
-  resizeMode: Video.propTypes.resizeMode,
-  hideControlsOnStart: PropTypes.bool,
-  endWithThumbnail: PropTypes.bool,
-  customStyles: PropTypes.shape({
-    wrapper: View.propTypes.style,
-    video: Video.propTypes.style,
-    videoWrapper: View.propTypes.style,
-    controls: View.propTypes.style,
-    playControl: TouchableOpacity.propTypes.style,
-    controlButton: TouchableOpacity.propTypes.style,
-    controlIcon: Icon.propTypes.style,
-    playIcon: Icon.propTypes.style,
-    seekBar: View.propTypes.style,
-    seekBarFullWidth: View.propTypes.style,
-    seekBarProgress: View.propTypes.style,
-    seekBarKnob: View.propTypes.style,
-    seekBarKnobSeeking: View.propTypes.style,
-    seekBarBackground: View.propTypes.style,
-    thumbnail: Image.propTypes.style,
-    playButton: TouchableOpacity.propTypes.style,
-    playArrow: Icon.propTypes.style,
-  }),
-  onEnd: PropTypes.func,
-  onProgress: PropTypes.func,
-  onLoad: PropTypes.func,
-};
+// VideoPlayer.propTypes = {
+//   video: Video.propTypes.source,
+//   thumbnail: Image.propTypes.source,
+//   videoWidth: PropTypes.number,
+//   videoHeight: PropTypes.number,
+//   duration: PropTypes.number,
+//   autoplay: PropTypes.bool,
+//   defaultMuted: PropTypes.bool,
+//   muted: PropTypes.bool,
+//   style: View.propTypes.style,
+//   controlsTimeout: PropTypes.number,
+//   disableControlsAutoHide: PropTypes.bool,
+//   loop: PropTypes.bool,
+//   resizeMode: Video.propTypes.resizeMode,
+//   hideControlsOnStart: PropTypes.bool,
+//   endWithThumbnail: PropTypes.bool,
+//   customStyles: PropTypes.shape({
+//     wrapper: View.propTypes.style,
+//     video: Video.propTypes.style,
+//     videoWrapper: View.propTypes.style,
+//     controls: View.propTypes.style,
+//     playControl: TouchableOpacity.propTypes.style,
+//     controlButton: TouchableOpacity.propTypes.style,
+//     controlIcon: Icon.propTypes.style,
+//     playIcon: Icon.propTypes.style,
+//     seekBar: View.propTypes.style,
+//     seekBarFullWidth: View.propTypes.style,
+//     seekBarProgress: View.propTypes.style,
+//     seekBarKnob: View.propTypes.style,
+//     seekBarKnobSeeking: View.propTypes.style,
+//     seekBarBackground: View.propTypes.style,
+//     thumbnail: Image.propTypes.style,
+//     playButton: TouchableOpacity.propTypes.style,
+//     playArrow: Icon.propTypes.style,
+//   }),
+//   onEnd: PropTypes.func,
+//   onProgress: PropTypes.func,
+//   onLoad: PropTypes.func,
+// };
 
 VideoPlayer.defaultProps = {
   videoWidth: 1280,

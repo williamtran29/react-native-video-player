@@ -33,9 +33,6 @@ react-native link react-native-vector-icons
 | resizeMode              | The video's resizeMode. defaults to contain and is passed to react-native-video.            |
 | hideControlsOnStart     | Hides the controls on start video.                                                          |
 | endWithThumbnail        | Returns to the thumbnail after the video ends.                                              |
-| disableSeek             | Disable video seeking.                                                                      |
-| pauseOnPress            | Automatically pause/play when pressing the video player anywhere.                           |
-| fullScreenOnLongPress   | Automatically show video on fullscreen when doing a long press.                             |
 | onStart                 | Callback for when the start button is pressed.                                              |
 | onPlayPress             | Callback for when the play button is pressed.                                               |
 | onHideControls          | Callback for when the controls are being hide.                                              |
@@ -63,21 +60,42 @@ All other props are passed to the react-native-video component.
  - playArrow
  - videoWrapper
 
-## Methods
-
-| Method                  | Props           | Description                                                               |
-|-------------------------|-----------------|---------------------------------------------------------------------------|
-| seek                    | time: float     | Seek the player to the given time.                                        |
-| stop                    |                 | Stop the playback and reset back to 0:00.                                 |
-| pause                   |                 | Pause the playback.                                                       |
-| resume                  |                 | Resume the playback.                                                      |
-
 ## Future features
 
 - [X] Make seek bar seekable.
 - [x] Make player customizable.
 - [ ] Add volume control
 - [X] Add fullscreen button
-  - [ ] Add fullscreen button for Android (See PR #38 if you need fullscreen in Android)
+  - [X] Add fullscreen button for android
 - [ ] Add loader
-- [ ] Add video duration/play time
+
+## Setting up fullscreen on Android
+
+Step 1:
+
+Go to your ```android\app\src\main\java\your\package\directory``` folder where you can find ```MainActivity.java```. Copy the java files from the repo's  ```android\app\src\main\java``` folder and paste them there. Open those files in any editor(Android Studio recommended) and change the package names according to your project. After that, go to your ```MainApplication.java``` file 
+and under the ```new MainReactPackage()```, copy and paste this: ```new BridgePackage()``` and it should look similar to the code below if you do not have other packages.
+```
+@Override
+    protected List<ReactPackage> getPackages() {
+      return Arrays.<ReactPackage>asList(
+          new MainReactPackage(),
+          new BridgePackage()
+          );
+     }
+```
+Step 2: 
+
+Make a folder in your ```android\app\src\main\res``` directory and name it ```layout```, then copy the player_fullscreen.xml from the repo's ```android\app\src\main\res\layout``` directory and paste it into your directory and then go to your ```AndroidManifest.xml``` and add this before the ending application tag: 
+            ```
+            <activity android:name=".VideoActivity"
+               android:screenOrientation="sensorLandscape"
+               android:configChanges="orientation|screenSize"
+            />
+            ```
+            
+           
+If you want to remove the action bar, change your theme or change the theme for your activity from the manifest     
+
+And then your fullscreen should be working and ready to go!
+
